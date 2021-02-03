@@ -55,9 +55,9 @@
     ctx.fillRect(x,y,longueur,largeur);
 
    
-    var IntervId = setInterval(avance(), 100);
+    var IntervId = setInterval(avance, 100);
 
-    function avance (){
+    function avance(){
         if (x<750){
         ctx.clearRect(x, y, largeur, longueur);
         x = x + 10;
