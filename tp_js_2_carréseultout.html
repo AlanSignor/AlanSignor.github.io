@@ -24,7 +24,6 @@
      </nav>
 
      <main>
-        <button id="go" onClick="go()">go</button>
         <canvas
             id="Piste" width="600" height="600">
             <div id='div2' style="border-color:red; border-style: solid; height: 50px;width: 50px;"></div>
@@ -55,8 +54,8 @@
     ctx.fillStyle = '#a70000';
     ctx.fillRect(x,y,longueur,largeur);
 
-    function go(){
-    var IntervId = setInterval(avance(), 100);}
+   
+    var IntervId = setInterval(avance(), 100);
 
     function avance (){
         if (x<750){
