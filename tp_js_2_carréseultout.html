@@ -24,15 +24,12 @@
      </nav>
 
      <main>
-       <canvas
+        <button id="go" onClick="go()">go</button>
+        <canvas
             id="Piste" width="600" height="600">
             <div id='div2' style="border-color:red; border-style: solid; height: 50px;width: 50px;"></div>
-       </canvas>
+        </canvas>
 
-      
-
-
-  
         <aside>
           <h2>Qui suis-je ?</h2>
           <ul>
@@ -45,6 +42,32 @@
   
       </main>
 
+    <script>
+
+    let canvas = document.getElementById("Piste");
+    let ctx = canvas.getContext('2d');
+
+    x = 0;
+    y = 10;
+    largeur = 50;
+    longueur = 50;
+
+    ctx.fillStyle = '#a70000';
+    ctx.fillRect(x,y,longueur,largeur);
+
+    function go(){
+    var IntervId = setInterval(avance(), 100);}
+
+    function avance (){
+        if (x<750){
+        ctx.clearRect(x, y, largeur, longueur);
+        x = x + 10;
+        ctx.fillRect(x,y,longueur,largeur);
+        }
+        else {clearInterval(IntervId);}
+    }
+
+    </script>
     <footer>
       <p>©Copyright ... </p>
     </footer>
