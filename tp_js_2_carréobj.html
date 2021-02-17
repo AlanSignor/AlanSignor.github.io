@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Accueil</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+  </head>
+
+  <body>
+    <header>
+      <h1>ProgWEB ZEBI</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="./travauxhtml.html">HTML</a></li>
+        <li><a href="./tp_js_2_exo1.html">JS</a></li>
+        <li><a href="./travauxPHP.html">PHP</a></li>
+        <li><a href="./index.html">Acccueil</a></li>
+      </ul>
+
+     </nav>
+
+     <main>
+        <canvas
+            id="Piste" width="600" height="600">
+            <div id='div2' style="border-color:red; border-style: solid; height: 50px;width: 50px;"></div>
+        </canvas>
+
+        <aside>
+          <h2>Qui suis-je ?</h2>
+          <ul>
+            <li><a href="./cv.html">Mon CV</a></li>
+            
+            <li><a href="#"></a>relation3</li>
+            
+          </ul>
+        </aside>
+  
+      </main>
+
+    <script>
+
+const canvas = document.getElementById("Piste");
+const context = canvas.getContext("2d");
+context.fillStyle = '#a70000';
+const pause = 100;
+const squarewidth = 50;
+const squareheight = 50;
+wallClock = 0;
+
+
+class Square {
+		constructor(context,width,height,x,y,delay){
+			this.context=context;
+			this.width=width;
+			this.height=height;
+			this.x=x;
+			this.y=y;
+			this.delay=delay;
+            this.hasStarted=false;
+            this.hasfinished = false;
+		}
+
+		clear(){
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+		}
+
+		update(){
+			if((this.hasStarted == false) && (this.delay<wallClock)){
+				console.log("starting");
+				this.hasStarted=true;
+			}
+
+
+			if(this.hasStarted == true){
+				if (this.x < (canvas.width - this.width)) {	
+					this.x += 10;
+                }
+                else {this.hasfinished = true}
+        	}
+		}
+
+		draw(){
+			context.fillRect(
+		    	this.x,
+		    	this.y,
+		    	this.width,
+		    	this.height,
+		    	);
+        }
+}
+
+    const objectsInGame = new Array();
+
+    const square1 = new Square(context,squarewidth,squareheight,10,10,0);
+   	const square2 = new Square(context,squarewidth,squareheight,10,110,100);
+   	const square3 = new Square(context,squarewidth,squareheight,10,210,400);
+
+   	objectsInGame.push(square1);
+   	objectsInGame.push(square2);
+   	objectsInGame.push(square3);
+
+    function clearGame(){
+			objectsInGame.forEach(element => element.clear());
+	}
+
+
+	function updateGame(){
+		wallClock += 10;
+		objectsInGame.forEach(element => element.update());
+	}
+	
+
+	function drawGame(){
+		objectsInGame.forEach(element => element.draw());
+    }
+    
+    function checkfinish(){
+        finish = true;
+        objectsInGame.forEach(element => finish = finish & element.hasfinished);
+        if (finish){
+            clearInterval(IntervId);
+            console.log("Travail terminé");    
+        }
+    }
+	
+	function mainloop(){
+	 	clearGame();
+        updateGame();
+        drawGame();
+        checkfinish();
+    }
+
+    var IntervId = setInterval(mainloop, 100);
+    
+
+        
+
+    </script>
+    <footer>
+      <p>©Copyright ... </p>
+    </footer>
+
+  </body>
+</html>

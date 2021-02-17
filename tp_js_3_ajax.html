@@ -43,55 +43,54 @@
 
     <script>
 
-    let canvas = document.getElementById("Piste");
-    let ctx = canvas.getContext('2d');
-
-    x1 = 0;
-    y1 = 10;
-
-    x2 = 0;
-    y2 = 110;
-
-    x3 = 0;
-    y3 = 210;
-
-    largeur = 50;
-    longueur = 50;
 
 
-    delay = 0;
 
-    ctx.fillStyle = '#a70000';
-    ctx.fillRect(x1,y1,longueur,largeur);
-    ctx.fillRect(x2,y2,longueur,largeur);
-    ctx.fillRect(x3,y3,longueur,largeur);
-   
-    var IntervId = setInterval(avance, 100);
+const canvas = document.getElementById("Piste");
+compteur = 0;
 
-    function avance(){
-        delay = delay + 1;
 
-        if (x1<550){
-        ctx.clearRect(x1, y1, largeur, longueur);
-        x1 = x1 + 10;
-        ctx.fillRect(x1,y1,longueur,largeur);
-        
-        if (x2<550 && delay >= 10){
-        ctx.clearRect(x2, y2, largeur, longueur);
-        x2 = x2 + 10;
-        ctx.fillRect(x2,y2,longueur,largeur);
+var Point = function(x,y,canvas)
+{
+	this.canvas=canvas;
+	this.canvas2dContext=this.canvas.getContext("2d");
+	this.x=x;
+	this.y=y;
+
+	this.ache = function()
+	{
+
+		this.canvas2dContext.beginPath();
+		this.canvas2dContext.arc(this.x,this.y,10,0,2*Math.PI,false);
+		this.canvas2dContext.fillStyle = '#a70000';
+		this.canvas2dContext.fill();
+	}
+}
+
+function updateCanvas()
+{
+    Xhr = new XMLHttpRequest();
+    Xhr.open("GET","https://stwom.herokuapp.com/600"); 
+    Xhr.send();
+    
+    Xhr.onreadystatechange = function() {
+      if (Xhr.readyState === 4 && Xhr.status === 200) {
+        Json = Xhr.response;
+        resp = JSON.parse(Json);
+        console.log(resp);    
+        point = new Point(resp.x,resp.y,canvas);
+        point.ache();
+        compteur += 1;
+        if (compteur > 300){
+          clearInterval(IntervId);
         }
-        
-        if (x3<550 && delay >= 40){
-        ctx.clearRect(x3, y3, largeur, longueur);
-        x3 = x3 + 10;
-        ctx.fillRect(x3,y3,longueur,largeur);
-        }
-
-        if(x3 >= 550) {clearInterval(IntervId);}
+      }
     }
 }
 
+var IntervId = setInterval(updateCanvas, 100);
+
+        
 
     </script>
     <footer>
